@@ -7,8 +7,8 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-BOT_TOKEN =8807690018:AAHrgtQgqwZ71_rLckDADYzqwtfbPqfyryA
-CHAPA_SECRET_KEY = CHAPA_TEST_PRIV_9bofdBrfK-Lmxufys0zNwpFNuPfF5TgoVdxi3vUw
+BOT_TOKEN = "8807690018:AAHrgtQgqwZ71_rLckDADYzqwtfbPqfyryA"
+CHAPA_SECRET_KEY = "CHAPA_TEST_PRIV_9bofdBrfK-Lmxufys0zNwpFNuPfF5TgoVdxi3vUw"
 CHAPA_BASE_URL = "https://api.chapa.co/v1/transaction"
 
 bot = Bot(token=BOT_TOKEN)
@@ -67,9 +67,8 @@ async def check(call: types.CallbackQuery):
     else:
         await call.message.answer("⚠️ ክፍያው እስካሁን አልደረሰም፤ እባክዎ ከከፈሉ በኋላ እንደገና ይሞክሩ።")
 
-# Render ሰርቨሩ ክፍት መሆኑን እንዲያውቅ የሚያገለግል ቀላል ዌብ ሰርቨር
 async def handle_ping(request):
-    return web.Response(text="Bot is running!")
+    return web.Response(text="Bot is online!")
 
 async def start_web_server():
     app = web.Application()
