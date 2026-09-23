@@ -16,7 +16,7 @@ dp = Dispatcher()
 
 async def create_payment(amount: float, email: str, name: str, tx_ref: str):
     headers = {
-        "Authorization": f"Bearer {CHAPA_SECRET_KEY}",
+        "Authorization": f"Bearer {CHAPA_SECRET_KEY.strip()}",
         "Content-Type": "application/json"
     }
     payload = {
@@ -28,10 +28,14 @@ async def create_payment(amount: float, email: str, name: str, tx_ref: str):
     }
     async with aiohttp.ClientSession() as session:
         async with session.post(f"{CHAPA_BASE_URL}/initialize", json=payload, headers=headers) as resp:
-            return await resp.json()
+            try:
+                data = await resp.json()
+                return data, resp.status
+            except Exception as e:
+                return {"message": str(e)}, resp.status
 
 async def verify_payment(tx_ref: str):
-    headers = {"Authorization": f"Bearer {CHAPA_SECRET_KEY}"}
+    headers = {"Authorization": f"Bearer {CHAPA_SECRET_KEY.strip()}"}
     async with aiohttp.ClientSession() as session:
         async with session.get(f"{CHAPA_BASE_URL}/verify/{tx_ref}", headers=headers) as resp:
             return await resp.json()
@@ -46,9 +50,9 @@ async def buy(message: types.Message):
     amount = 50.0
     user_name = message.from_user.first_name or "Customer"
 
-    res = await create_payment(amount, "customer@example.com", user_name, tx_ref)
+    res, status_code = await create_payment(amount, "customer@example.com", user_name, tx_ref)
 
-    if res.get("status") == "success":
+    if status_code == 200 and res.get("status") == "success":
         link = res["data"]["checkout_url"]
         btn = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text="💳 በቴሌብር ወይም በባንክ ይክፈሉ", url=link)],
@@ -56,7 +60,9 @@ async def buy(message: types.Message):
         ])
         await message.answer(f"📦 የእቃ ዋጋ፦ {amount} ብር\nከታች ባለው ሊንክ ይክፈሉ፦", reply_markup=btn)
     else:
-        await message.answer("የክፍያ ሊንክ ማመንጨት አልተቻለም። ቁልፎቹ ትክክል መሆናቸውን ያረጋግጡ።")
+        # ትክክለኛውን ችግር እዚህ ጋር በግልጽ ያሳየናል
+        error_msg = res.get("message", "ያልታወቀ ስህተት")
+        await message.answer(f"❌ ስህተት ተፈጥሯል!\nኮድ: {status_code}\nምክንያት: {error_msg}")
 
 @dp.callback_query(F.data.startswith("check:"))
 async def check(call: types.CallbackQuery):
