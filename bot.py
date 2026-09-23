@@ -7,6 +7,7 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+# ያዘጋጀናቸው ትክክለኛ ቁልፎች
 BOT_TOKEN = "8989262004:AAHBup9A-8kJmgnwQLQc9Sl-SK2vWlf5Dqc"
 CHAPA_SECRET_KEY = "CHAPA_TEST_PRIV_9bofdBrfK-Lmxufys0zNwpFNuPfF5TgoVdxi3vUw"
 CHAPA_BASE_URL = "https://api.chapa.co/v1/transaction"
@@ -60,7 +61,6 @@ async def buy(message: types.Message):
         ])
         await message.answer(f"📦 የእቃ ዋጋ፦ {amount} ብር\nከታች ባለው ሊንክ ይክፈሉ፦", reply_markup=btn)
     else:
-        # ትክክለኛውን ችግር እዚህ ጋር በግልጽ ያሳየናል
         error_msg = res.get("message", "ያልታወቀ ስህተት")
         await message.answer(f"❌ ስህተት ተፈጥሯል!\nኮድ: {status_code}\nምክንያት: {error_msg}")
 
