@@ -7,7 +7,7 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-BOT_TOKEN = "8807690018:AAHrgtQgqwZ71_rLckDADYzqwtfbPqfyryA"
+BOT_TOKEN = "8989262004:AAHBup9A-8kJmgnwQLQc9Sl-SK2vWlf5Dqc"
 CHAPA_SECRET_KEY = "CHAPA_TEST_PRIV_9bofdBrfK-Lmxufys0zNwpFNuPfF5TgoVdxi3vUw"
 CHAPA_BASE_URL = "https://api.chapa.co/v1/transaction"
 
