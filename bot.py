@@ -7,7 +7,6 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# ያዘጋጀናቸው ትክክለኛ ቁልፎች
 BOT_TOKEN = "8989262004:AAHBup9A-8kJmgnwQLQc9Sl-SK2vWlf5Dqc"
 CHAPA_SECRET_KEY = "CHAPA_TEST_PUB_BO9YFxpra9gXbiM3JMSPeoZ0lrOjTrxc3fgY3M5B"
 CHAPA_BASE_URL = "https://api.chapa.co/v1/transaction"
